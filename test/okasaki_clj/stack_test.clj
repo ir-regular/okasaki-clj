@@ -54,3 +54,17 @@
                     [3 4 1 2] [1 2] [3 4]
                     [1 2] [1 2] []
                     [1 2] [] [1 2])))
+
+(deftest suffixes-vectors-test
+  (testing "Suffixes of vector-based Stacks"
+    (are [suff stack] (= suff (suffixes stack))
+                      [[]] []
+                      [[] [1]] [1]
+                      [[] [1] [1 2] [1 2 3]] [1 2 3])))
+
+(deftest suffixes-conses-test
+  (testing "Suffixes of vector-based Stacks"
+    (are [suff stack] (= (map #(apply cons-stack %) suff) (suffixes (apply cons-stack stack)))
+                      [[]] []
+                      [[] [1]] [1]
+                      [[] [1] [1 2] [1 2 3]] [1 2 3])))
