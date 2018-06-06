@@ -1,4 +1,5 @@
-(ns okasaki-clj.stack)
+(ns okasaki-clj.stack
+  (:import (clojure.lang IPersistentVector)))
 
 (defprotocol Stack
   (empty? [stack])
@@ -7,7 +8,7 @@
   (tail [stack]))
 
 (extend-protocol Stack
-  clojure.lang.IPersistentVector
+  IPersistentVector
   (empty? [stack] (= stack []))
   (cons [stack x] (conj stack x))
   (head [stack] (peek stack))
