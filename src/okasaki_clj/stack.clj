@@ -1,4 +1,6 @@
 (ns okasaki-clj.stack
+  ; avoid conflicts with existing core Clojure functions
+  (:refer-clojure :exclude [empty? cons concat])
   (:import (clojure.lang IPersistentVector)))
 
 (defprotocol Stack

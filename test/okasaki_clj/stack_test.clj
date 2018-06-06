@@ -1,4 +1,6 @@
 (ns okasaki-clj.stack-test
+  ; avoid conflicts with existing core Clojure functions
+  (:refer-clojure :exclude [empty? cons concat])
   (:require [clojure.test :refer :all]
             [okasaki-clj.stack :refer :all]))
 
