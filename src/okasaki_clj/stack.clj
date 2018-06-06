@@ -37,3 +37,6 @@
   ([] (->Cons nil nil))
   ; normal usecase
   ([& xs] (reduce cons (cons-stack) xs)))
+
+(defn concat [xs ys]
+  (if (empty? xs) ys (cons (concat (tail xs) ys) (head xs))))

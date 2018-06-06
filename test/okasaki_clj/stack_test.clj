@@ -34,3 +34,17 @@
                     -1 (compare (cons-stack 1) (cons-stack 1 2))
                     1 (compare (cons-stack 1 2) (cons-stack 1 1))
                     -1 (compare (cons-stack 1 2) (cons-stack 1 3)))))
+
+(deftest concat-vectors-test
+  (testing "Concat of vector-based Stacks"
+    (are [res test] (= res test)
+                    [3 4 1 2] (concat [1 2] [3 4])
+                    [1 2] (concat [1 2] [])
+                    [1 2] (concat [] [1 2]))))
+
+(deftest concat-conses-test
+  (testing "Concat of Cons-based Stacks"
+    (are [res test] (= res test)
+                    (cons-stack 3 4 1 2) (concat (cons-stack 1 2) (cons-stack 3 4))
+                    (cons-stack 1 2) (concat (cons-stack 1 2) (cons-stack))
+                    (cons-stack 1 2) (concat (cons-stack) (cons-stack 1 2)))))
