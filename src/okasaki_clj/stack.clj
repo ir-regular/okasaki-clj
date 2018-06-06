@@ -14,10 +14,10 @@
   (head [stack] (peek stack))
   (tail [stack] (pop stack)))
 
-(deftype Cons [head tail]
+(deftype Cons [head tail ^boolean empty]
   Stack
-  (empty? [stack] (nil? head))
-  (cons [stack x] {:pre (some? x)} (Cons. x stack))
+  (empty? [stack] (.empty stack))
+  (cons [stack x] (Cons. x stack false))
   (head [stack] head)
   (tail [stack] tail)
   Object
@@ -34,7 +34,7 @@
 
 (defn cons-stack
   ; sentinel - empty list
-  ([] (->Cons nil nil))
+  ([] (->Cons nil nil true))
   ; normal usecase
   ([& xs] (reduce cons (cons-stack) xs)))
 

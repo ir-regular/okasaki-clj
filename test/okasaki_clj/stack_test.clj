@@ -26,7 +26,13 @@
                     (cons-stack 1) (tail (cons-stack 1 2))
                     (cons-stack 1 2) (cons (cons-stack 1) 2))))
 
-(deftest cons-stack-comparison
+(deftest cons-stack-nils-test
+  (testing "Can store nils on Cons-based Stacks"
+    (is (not (empty? (cons-stack nil))))
+    (is (= (cons-stack 1 nil) (cons (cons-stack 1) nil)))
+    (is (not= (cons-stack nil) (cons-stack)))))
+
+(deftest cons-stack-comparison-test
   (testing "Comparison of Cons-based Stacks"
     (are [res test] (= res test)
                     0 (compare (cons-stack 1) (cons-stack 1))
