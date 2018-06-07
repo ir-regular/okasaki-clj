@@ -13,11 +13,11 @@
   (contains? [set x]
     (if (empty? set)
       false
-      (loop [set set]
-        (cond (nil? set) false
-              (< x (.value set)) (recur (.left set))
-              (> x (.value set)) (recur (.right set))
-              :else true))))
+      (loop [set set maybeX nil]
+        (cond
+          (nil? set) (= x maybeX)
+          (< x (.value set)) (recur (.left set) maybeX)
+          :else (recur (.right set) (.value set))))))
   (insert [set x]
     {:pre [(instance? Comparable x)]}
     (cond
