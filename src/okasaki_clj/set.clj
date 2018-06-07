@@ -18,11 +18,13 @@
               (< x (.value set)) (recur (.left set))
               (> x (.value set)) (recur (.right set))
               :else true))))
-  (insert [set x] (cond
-                    (empty? set) (UnbalancedSet. x nil nil)
-                    (< x value) (UnbalancedSet. value (if left (insert left x) (UnbalancedSet. x nil nil)) right)
-                    (> x value) (UnbalancedSet. value left (if right (insert right x) (UnbalancedSet. x nil nil)))
-                    :else set))
+  (insert [set x]
+    {:pre [(instance? Comparable x)]}
+    (cond
+      (empty? set) (UnbalancedSet. x nil nil)
+      (< x value) (UnbalancedSet. value (if left (insert left x) (UnbalancedSet. x nil nil)) right)
+      (> x value) (UnbalancedSet. value left (if right (insert right x) (UnbalancedSet. x nil nil)))
+      :else set))
   Object
   (equals [this that]
     (and (= (instance? UnbalancedSet that))

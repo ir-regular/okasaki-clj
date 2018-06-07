@@ -24,12 +24,12 @@
   (tail [stack] tail)
   Object
   (equals [this that]
-    (and (= (type this) (type that))
+    (and (instance? Cons that)
          (= (.head this) (.head that))
          (= (.tail this) (.tail that))))
   Comparable
   (compareTo [this that]
-    {:pre (= (type this) (type that))}
+    {:pre [(instance? Cons that)]}
     (if (not= (.head this) (.head that))
       (compare (.head this) (.head that))
       (compare (.tail this) (.tail that)))))
