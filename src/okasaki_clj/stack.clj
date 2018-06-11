@@ -18,21 +18,21 @@
 
 (deftype Cons [head tail ^boolean empty]
   Stack
-  (empty? [stack] (.empty stack))
+  (empty? [stack] (.-empty stack))
   (cons [stack x] (Cons. x stack false))
   (head [stack] head)
   (tail [stack] tail)
   Object
   (equals [this that]
     (and (instance? Cons that)
-         (= (.head this) (.head that))
-         (= (.tail this) (.tail that))))
+         (= (.-head this) (.-head ^Cons that))
+         (= (.-tail this) (.-tail ^Cons that))))
   Comparable
   (compareTo [this that]
     {:pre [(instance? Cons that)]}
-    (if (not= (.head this) (.head that))
-      (compare (.head this) (.head that))
-      (compare (.tail this) (.tail that)))))
+    (if (not= (.-head this) (.-head ^Cons that))
+      (compare (.-head this) (.-head ^Cons that))
+      (compare (.-tail this) (.-tail ^Cons that)))))
 
 (defn cons-stack
   ; sentinel - empty list

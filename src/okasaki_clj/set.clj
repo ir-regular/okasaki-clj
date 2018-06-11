@@ -16,8 +16,8 @@
       (loop [set set maybeX nil]
         (cond
           (nil? set) (= x maybeX)
-          (< x (.value set)) (recur (.left set) maybeX)
-          :else (recur (.right set) (.value set))))))
+          (< x (.-value set)) (recur (.-left set) maybeX)
+          :else (recur (.-right set) (.-value set))))))
   (insert [set x]
     {:pre [(instance? Comparable x)]}
     (if (empty? set)
@@ -39,9 +39,9 @@
   Object
   (equals [this that]
     (and (= (instance? UnbalancedSet that))
-         (= (.value this) (.value that))
-         (= (.left this) (.left that))
-         (= (.right this) (.right that)))))
+         (= (.-value this) (.-value ^UnbalancedSet that))
+         (= (.-left this) (.-left ^UnbalancedSet that))
+         (= (.-right this) (.-right ^UnbalancedSet that)))))
 
 (defn unbalanced-set
   ; sentinel-ish - empty set

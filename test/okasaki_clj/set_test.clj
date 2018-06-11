@@ -1,7 +1,8 @@
 (ns okasaki-clj.set-test
   (:refer-clojure :exclude [empty? contains?])
   (:require [clojure.test :refer :all]
-            [okasaki-clj.set :refer :all]))
+            [okasaki-clj.set :refer :all])
+  (:import (okasaki_clj.set UnbalancedSet)))
 
 (deftest unbalanced-set-empty
   (testing "UnbalancedSet recognises emptiness"
@@ -30,4 +31,4 @@
   (testing "UnbalancedSet insertion only adds unique elements"
     (is (let [t (insert (unbalanced-set [1]) 1)]
           (and (contains? t 1)
-            (every? nil? [(.left t) (.right t)]))))))
+               (every? nil? [(.-left ^UnbalancedSet t) (.-right ^UnbalancedSet t)]))))))
