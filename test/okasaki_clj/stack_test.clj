@@ -37,25 +37,25 @@
 (deftest cons-stack-comparison-test
   (testing "Comparison of Cons-based Stacks"
     (are [res stack1 stack2] (= res (compare (apply cons-stack stack1) (apply cons-stack stack2)))
-                    0 [1] [1]
-                    1 [1 2] [1]
-                    -1 [1] [1 2]
-                    1 [1 2] [1 1]
-                    -1 [1 2] [1 3])))
+                             0 [1] [1]
+                             1 [1 2] [1]
+                             -1 [1] [1 2]
+                             1 [1 2] [1 1]
+                             -1 [1 2] [1 3])))
 
 (deftest concat-vectors-test
   (testing "Concat of vector-based Stacks"
     (are [res arg1 arg2] (= res (concat arg1 arg2))
-                    [3 4 1 2] [1 2] [3 4]
-                    [1 2] [1 2] []
-                    [1 2] [] [1 2])))
+                         [3 4 1 2] [1 2] [3 4]
+                         [1 2] [1 2] []
+                         [1 2] [] [1 2])))
 
 (deftest concat-conses-test
   (testing "Concat of Cons-based Stacks"
     (are [res arg1 arg2] (= (apply cons-stack res) (concat (apply cons-stack arg1) (apply cons-stack arg2)))
-                    [3 4 1 2] [1 2] [3 4]
-                    [1 2] [1 2] []
-                    [1 2] [] [1 2])))
+                         [3 4 1 2] [1 2] [3 4]
+                         [1 2] [1 2] []
+                         [1 2] [] [1 2])))
 
 (deftest suffixes-vectors-test
   (testing "Suffixes of vector-based Stacks"
