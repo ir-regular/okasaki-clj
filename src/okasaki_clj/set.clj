@@ -8,7 +8,6 @@
 
 (deftype UnbalancedSet [value left right]
   Set
-  ; we do not support storing nil in the tree as anything else than value of sentinel/empty tree
   (empty? [set] (nil? value))
   (contains? [set x]
     (if (empty? set)
@@ -19,7 +18,8 @@
           (< x (.-value set)) (recur (.-left set) maybeX)
           :else (recur (.-right set) (.-value set))))))
   (insert [set x]
-    {:pre [(instance? Comparable x)]}
+    (when (or (nil? x) (not (instance? Comparable x)))
+      (throw (IllegalArgumentException. "UnbalancedSet does not support storing nil")))
     (try
       (loop [set (if (empty? set) nil set)
              maybeX nil
