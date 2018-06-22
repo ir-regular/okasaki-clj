@@ -10,7 +10,7 @@
     (is (not (empty? (leftist-heap [1]))))
     (is (thrown? IndexOutOfBoundsException (find-min (leftist-heap))))
     (is (thrown? IndexOutOfBoundsException (delete-min (leftist-heap))))
-    (is (= (leftist-heap) (merge (leftist-heap) (leftist-heap))))))
+    (is (empty? (merge (leftist-heap) (leftist-heap))))))
 
 (deftest building-heap
   (testing "Building heap through merge and insert"
@@ -22,6 +22,8 @@
             [1 [2 [] []] [3 [4 [] []] []]] (insert (leftist-heap [1 2 3]) 4)
             [1 [2 [] []] [3 [4 [] []] []]] (merge (leftist-heap [1 2]) (leftist-heap [3 4]))
             [1 [] []] (merge (leftist-heap [1]) nil)
+            ; also check if nil+heap merge is correct
+            [1 [] []] (merge nil (leftist-heap [1]))
             [1 [] []] (merge (leftist-heap [1]) (leftist-heap)))))
 
 (deftest min-heap-check

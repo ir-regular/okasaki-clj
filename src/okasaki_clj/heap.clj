@@ -13,3 +13,8 @@
     "Returns the smallest element of the heap. Throws if heap is empty.")
   (delete-min [heap]
     "Returns a new heap with the smallest element removed. Throws if heap is empty."))
+
+(extend-protocol Heap
+  nil
+  (empty? [heap] true)
+  (merge [this that] that))
