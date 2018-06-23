@@ -30,10 +30,25 @@
   (insert [heap x]
     (when (not (instance? Comparable x))
       (throw (IllegalArgumentException. "Cannot build heap from non-Comparable objects")))
-    (merge (leftist-heap-node x nil nil) heap))
+    (let [[element x] (sort [element x]) ; element < x or element is nil
+          x-heap (leftist-heap-node x nil nil)
+          left-element (get-element left)]
+      (cond
+        (empty? heap) x-heap
+
+        (nil? left-element)
+        (leftist-heap-node element x-heap nil)
+
+        (pos? (compare x left-element))
+        (leftist-heap-node element left (if (empty? right) x-heap (insert right x)))
+
+        :else
+        (leftist-heap-node element (insert left x) right))))
+
   (merge [this that]
     (cond
       (empty? this) that
+
       (empty? that) this
 
       (pos? (compare element (get-element that)))
