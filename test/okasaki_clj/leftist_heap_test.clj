@@ -22,13 +22,14 @@
             [1 [2 [] []] [3 [4 [] []] []]] (insert (leftist-heap [1 2 3]) 4)
             [1 [2 [] []] [3 [4 [] []] []]] (merge (leftist-heap [1 2]) (leftist-heap [3 4]))
             [1 [] []] (merge (leftist-heap [1]) nil)
-            ; also check if nil+heap merge is correct
-            [1 [] []] (merge nil (leftist-heap [1]))
-            [1 [] []] (merge (leftist-heap [1]) (leftist-heap)))))
+            [1 [] []] (merge (leftist-heap [1]) (leftist-heap))
+            [1 [1 [] []] []] (insert (insert (leftist-heap) 1) 1)
+            [1 [1 [2 [] []] [3 [] []]] []] (merge (leftist-heap [1]) (leftist-heap [1 2 3])))))
 
 (deftest min-heap-check
   (testing "Finding and removing minimum of a heap"
     (is (= 1 (find-min (leftist-heap [1]))))
     (is (= 0 (find-min (leftist-heap (range 20)))))
     (is (empty? (delete-min (leftist-heap [1]))))
-    (is (= 1 (find-min (delete-min (leftist-heap (range 20))))))))
+    (is (= 1 (find-min (delete-min (leftist-heap (range 20))))))
+    (is (= 1 (find-min (delete-min (leftist-heap [1 2 1])))))))

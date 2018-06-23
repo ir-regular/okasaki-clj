@@ -35,8 +35,12 @@
     (cond
       (empty? this) that
       (empty? that) this
-      (neg? (compare element (get-element that))) (leftist-heap-node element left (merge that right))
-      :else (leftist-heap-node (get-element that) (.-left that) (merge this (.-right that))))))
+
+      (pos? (compare element (get-element that)))
+      (leftist-heap-node (get-element that) (.-left that) (merge this (.-right that)))
+
+      :else ; top of "this" is less or equal than top of "that", so it stays as top
+      (leftist-heap-node element left (merge that right)))))
 
 ; internal-use constructor
 
