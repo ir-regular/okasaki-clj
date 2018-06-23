@@ -54,7 +54,8 @@
       (pos? (compare element (get-element that)))
       (leftist-heap-node (get-element that) (.-left that) (merge this (.-right that)))
 
-      :else ; top of "this" is less or equal than top of "that", so it stays as top
+      ; top of "this" is less or equal than top of "that", so it stays as top
+      :else
       (leftist-heap-node element left (merge that right)))))
 
 ; internal-use constructor
@@ -71,8 +72,13 @@
 (defn leftist-heap
   "Constructs a leftist binary min heap from a list of elements"
   ([] (->LeftistHeap 0 nil nil nil))
-  ; to be optimised:
-  ([xs] (reduce insert (leftist-heap) xs)))
+  ([xs]
+   (->> xs
+        (map #(->LeftistHeap 1 % nil nil))
+        (iterate (fn [xs] (map #(merge (first %) (second %)) (partition-all 2 xs))))
+        (drop-while #(some? (second %)))
+        (first)
+        (first))))
 
 ; internal use getters
 
