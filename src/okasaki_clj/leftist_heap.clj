@@ -58,3 +58,15 @@
   ([] (->LeftistHeap 0 nil nil nil))
   ; to be optimised:
   ([xs] (reduce insert (leftist-heap) xs)))
+
+; debugging/pretty-printing
+
+(defn- to-vector [heap]
+  (if (or (nil? heap) (empty? heap))
+    []
+    (let [e (.-element heap) l (.-left heap) r (.-right heap)]
+      [e (to-vector l) (to-vector r)])))
+
+(defmethod print-method LeftistHeap [o ^java.io.Writer w]
+  (.write w (str (class o) ":\n"))
+  (.write w (str (to-vector o) "\n")))
