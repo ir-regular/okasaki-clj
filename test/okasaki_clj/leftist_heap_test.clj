@@ -14,10 +14,15 @@
 
 (deftest building-heap
   (testing "Building heap through merge and insert"
-    (is (= (leftist-heap [1 2]) (insert (insert (leftist-heap) 2) 1)))
-    (is (= (leftist-heap [1 2 3 4]) (merge (leftist-heap [1 2]) (leftist-heap [3 4]))))
-    (is (= (leftist-heap [1]) (merge (leftist-heap [1]) nil)))
-    (is (= (leftist-heap [1]) (merge (leftist-heap [1]) (leftist-heap))))))
+    (are
+      ; to-vector is a ^:private helper, but it's useful in tests as well
+      [v h] (= v (#'okasaki-clj.leftist-heap/to-vector h))
+            [1 [2 [3 [] []] []] []] (leftist-heap [3 2 1])
+            [1 [2 [] []] []] (insert (insert (leftist-heap) 2) 1)
+            [1 [2 [] []] [3 [4 [] []] []]] (insert (leftist-heap [1 2 3]) 4)
+            [1 [2 [] []] [3 [4 [] []] []]] (merge (leftist-heap [1 2]) (leftist-heap [3 4]))
+            [1 [] []] (merge (leftist-heap [1]) nil)
+            [1 [] []] (merge (leftist-heap [1]) (leftist-heap)))))
 
 (deftest min-heap-check
   (testing "Finding and removing minimum of a heap"
