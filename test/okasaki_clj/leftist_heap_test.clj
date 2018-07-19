@@ -17,11 +17,11 @@
     (are
       ; to-vector is a ^:private helper, but it's useful in tests as well
       [v h] (= v (#'okasaki-clj.leftist-heap/to-vector h))
+            [1 [2 [] []] [3 [] []]] (leftist-heap [1 2 3])
             [1 [2 [3 [] []] []] []] (leftist-heap [3 2 1])
             [1 [2 [] []] []] (insert (insert (leftist-heap) 2) 1)
             [1 [2 [] []] [3 [4 [] []] []]] (insert (leftist-heap [1 2 3]) 4)
             [1 [2 [] []] [3 [4 [] []] []]] (merge (leftist-heap [1 2]) (leftist-heap [3 4]))
-            [1 [] []] (merge (leftist-heap [1]) nil)
             [1 [] []] (merge (leftist-heap [1]) (leftist-heap))
             [1 [1 [] []] []] (insert (insert (leftist-heap) 1) 1)
             [1 [1 [2 [] []] [3 [] []]] []] (merge (leftist-heap [1]) (leftist-heap [1 2 3])))))
@@ -33,3 +33,9 @@
     (is (empty? (delete-min (leftist-heap [1]))))
     (is (= 1 (find-min (delete-min (leftist-heap (range 20))))))
     (is (= 1 (find-min (delete-min (leftist-heap [1 2 1])))))))
+
+(deftest nil-heap
+  (testing "Interaction of nil heap and LeftistHeap"
+    (let [h (leftist-heap [1 2])]
+      (is (= h (merge nil h)))
+      (is (= h (merge h nil))))))
